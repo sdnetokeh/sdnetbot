@@ -24,9 +24,11 @@
     ]
   },
   "whatsapp": {
-    "phoneNumber": "628xxxxxxxxxx",
+    "phoneNumber": "6285894340762",
     "webhookUrl": "https://your-n8n-instance.com/webhook/whatsapp",
-    "apiEndpoint": "https://your-whatsapp-gateway.com/api"
+    "apiEndpoint": "https://api.fonnte.com/send",
+    "provider": "fonnte",
+    "token": "AxqAYdM8T22QgKi4ert"
   },
   "escalation": {
     "triggerKeywords": [

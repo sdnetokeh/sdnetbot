@@ -11,7 +11,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FONNTE_TOKEN = 'YOUR_FONNTE_TOKEN'; // Ganti dengan token Fonnte Anda
+const FONNTE_TOKEN = 'AxqAYdM8T22QgKi4ert'; // Token API Fonnte Anda
 
 // Middleware
 app.use(bodyParser.json());

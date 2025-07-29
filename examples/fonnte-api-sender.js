@@ -8,7 +8,7 @@ const fs = require('fs');
 const FormData = require('form-data');
 
 // Konfigurasi
-const FONNTE_TOKEN = 'YOUR_FONNTE_TOKEN'; // Ganti dengan token Fonnte Anda
+const FONNTE_TOKEN = 'AxqAYdM8T22QgKi4ert'; // Token API Fonnte Anda
 const API_URL = 'https://api.fonnte.com/send';
 
 /**
