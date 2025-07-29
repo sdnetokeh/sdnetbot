@@ -25,7 +25,7 @@
   },
   "whatsapp": {
     "phoneNumber": "6285894340762",
-    "webhookUrl": "https://your-n8n-instance.com/webhook/whatsapp",
+    "webhookUrl": "http://18.215.188.50:5678/webhook/whatsapp",
     "apiEndpoint": "https://api.fonnte.com/send",
     "provider": "fonnte",
     "token": "AxqAYdM8T22QgKi4ert"
