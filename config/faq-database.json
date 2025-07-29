@@ -1,0 +1,124 @@
+{
+  "faqs": [
+    {
+      "id": "faq-001",
+      "category": "produk",
+      "keywords": ["produk", "barang", "item", "katalog"],
+      "questions": [
+        "Apa saja produk yang tersedia?",
+        "Bisa lihat katalog produk?",
+        "Produk apa yang dijual?",
+        "Ada produk apa saja?"
+      ],
+      "answer": "Kami memiliki berbagai produk dalam kategori elektronik, fashion, kesehatan, dan rumah tangga. Anda dapat melihat katalog lengkap di website kami www.example.com/katalog atau bisa saya kirimkan katalog digital melalui WhatsApp ini."
+    },
+    {
+      "id": "faq-002",
+      "category": "produk",
+      "keywords": ["harga", "biaya", "tarif", "berapa"],
+      "questions": [
+        "Berapa harga produknya?",
+        "Harganya berapa?",
+        "Biaya produk?",
+        "Tarif untuk layanan?"
+      ],
+      "answer": "Harga produk kami bervariasi tergantung jenis dan spesifikasinya. Untuk informasi harga spesifik, mohon sebutkan nama produk yang Anda minati, dan saya akan memberikan informasi harga terkini."
+    },
+    {
+      "id": "faq-003",
+      "category": "pembayaran",
+      "keywords": ["bayar", "pembayaran", "metode", "transfer", "kartu kredit", "cod"],
+      "questions": [
+        "Metode pembayaran apa saja yang tersedia?",
+        "Bisa bayar pakai apa?",
+        "Apakah menerima kartu kredit?",
+        "Bisa COD?"
+      ],
+      "answer": "Kami menerima berbagai metode pembayaran: transfer bank (BCA, Mandiri, BNI, BRI), kartu kredit/debit, e-wallet (OVO, GoPay, Dana, LinkAja), dan Cash on Delivery (COD) untuk wilayah tertentu."
+    },
+    {
+      "id": "faq-004",
+      "category": "pengiriman",
+      "keywords": ["kirim", "pengiriman", "ekspedisi", "ongkir", "ongkos kirim", "jne", "jnt", "sicepat"],
+      "questions": [
+        "Berapa lama waktu pengiriman?",
+        "Pakai ekspedisi apa?",
+        "Berapa ongkos kirimnya?",
+        "Apakah bisa dikirim ke luar kota/pulau?"
+      ],
+      "answer": "Kami menggunakan jasa ekspedisi JNE, J&T, SiCepat, dan Anteraja. Estimasi waktu pengiriman 2-3 hari untuk wilayah Jawa dan 4-7 hari untuk luar Jawa. Ongkos kirim dihitung berdasarkan berat, dimensi, dan lokasi tujuan."
+    },
+    {
+      "id": "faq-005",
+      "category": "pengembalian",
+      "keywords": ["retur", "pengembalian", "refund", "ganti", "rusak", "cacat"],
+      "questions": [
+        "Bagaimana cara retur barang?",
+        "Apakah bisa refund?",
+        "Produk rusak, bisa ditukar?",
+        "Kebijakan pengembalian barang?"
+      ],
+      "answer": "Kami menerima pengembalian produk dalam waktu 7 hari setelah diterima jika terdapat kerusakan atau ketidaksesuaian dengan deskripsi. Silakan kirimkan foto produk dan alasan pengembalian ke email cs@example.com atau melalui WhatsApp ini."
+    },
+    {
+      "id": "faq-006",
+      "category": "layanan",
+      "keywords": ["garansi", "servis", "perbaikan", "maintenance"],
+      "questions": [
+        "Apakah ada garansi?",
+        "Berapa lama masa garansi?",
+        "Bagaimana cara klaim garansi?",
+        "Apakah ada layanan servis?"
+      ],
+      "answer": "Produk elektronik kami memiliki garansi resmi 1 tahun dan garansi toko 7 hari. Untuk klaim garansi, silakan bawa produk beserta nota pembelian ke service center terdekat atau hubungi kami untuk informasi lebih lanjut."
+    },
+    {
+      "id": "faq-007",
+      "category": "layanan",
+      "keywords": ["jam operasional", "buka", "tutup", "kerja"],
+      "questions": [
+        "Jam berapa buka?",
+        "Sampai jam berapa?",
+        "Apakah buka di hari libur?",
+        "Jam operasional toko?"
+      ],
+      "answer": "Jam operasional toko offline kami adalah pukul 09.00-21.00 WIB setiap hari termasuk hari libur dan tanggal merah. Untuk layanan customer service online tersedia 24/7 melalui WhatsApp ini."
+    },
+    {
+      "id": "faq-008",
+      "category": "lainnya",
+      "keywords": ["lokasi", "alamat", "toko", "cabang"],
+      "questions": [
+        "Dimana lokasi tokonya?",
+        "Alamat toko dimana?",
+        "Ada berapa cabang?",
+        "Apakah ada toko offline?"
+      ],
+      "answer": "Toko pusat kami berlokasi di Jl. Contoh No. 123, Jakarta Selatan. Kami memiliki cabang di Jakarta, Bandung, Surabaya, dan Medan. Untuk alamat lengkap setiap cabang, silakan kunjungi website kami di www.example.com/lokasi."
+    },
+    {
+      "id": "faq-009",
+      "category": "lainnya",
+      "keywords": ["kontak", "hubungi", "telepon", "email", "sosmed"],
+      "questions": [
+        "Bagaimana cara menghubungi CS?",
+        "Nomor telepon customer service?",
+        "Email untuk komplain?",
+        "Ada sosial media?"
+      ],
+      "answer": "Anda dapat menghubungi kami melalui: Telepon: 021-12345678, Email: cs@example.com, Instagram/Facebook/Twitter: @exampleshop, atau melalui WhatsApp ini."
+    },
+    {
+      "id": "faq-010",
+      "category": "lainnya",
+      "keywords": ["promo", "diskon", "voucher", "potongan harga"],
+      "questions": [
+        "Ada promo apa saja?",
+        "Kapan ada diskon?",
+        "Bagaimana cara dapat voucher?",
+        "Ada cashback?"
+      ],
+      "answer": "Informasi promo dan diskon terbaru dapat dilihat di website dan sosial media kami. Saat ini kami memiliki promo diskon 20% untuk pembelian pertama, cashback 5% untuk pembayaran menggunakan e-wallet, dan gratis ongkir untuk pembelian minimal Rp 200.000."
+    }
+  ]
+} 

@@ -1,0 +1,45 @@
+{
+  "bot": {
+    "name": "CS Bot",
+    "greeting": "Halo! Selamat datang di layanan Customer Service kami. Ada yang bisa saya bantu?",
+    "businessHours": {
+      "start": "08:00",
+      "end": "20:00",
+      "timezone": "Asia/Jakarta",
+      "offHoursMessage": "Mohon maaf, layanan customer service kami hanya tersedia pada jam 08.00 - 20.00 WIB. Pesan Anda akan kami tanggapi saat jam operasional."
+    }
+  },
+  "responses": {
+    "fallback": "Mohon maaf, saya tidak memahami pertanyaan Anda. Silakan ajukan pertanyaan dengan lebih spesifik atau hubungi agen kami.",
+    "escalation": "Permintaan Anda akan saya teruskan ke agen customer service kami. Mohon tunggu sebentar."
+  },
+  "faq": {
+    "categories": [
+      "produk",
+      "layanan",
+      "pembayaran",
+      "pengiriman",
+      "pengembalian",
+      "lainnya"
+    ]
+  },
+  "whatsapp": {
+    "phoneNumber": "628xxxxxxxxxx",
+    "webhookUrl": "https://your-n8n-instance.com/webhook/whatsapp",
+    "apiEndpoint": "https://your-whatsapp-gateway.com/api"
+  },
+  "escalation": {
+    "triggerKeywords": [
+      "bicara dengan manusia",
+      "bicara dengan agent",
+      "bicara dengan cs",
+      "operator",
+      "customer service"
+    ],
+    "autoEscalateAfterFailedResponses": 3
+  },
+  "database": {
+    "saveConversations": true,
+    "saveCustomerInfo": true
+  }
+} 

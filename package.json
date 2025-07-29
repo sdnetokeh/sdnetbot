@@ -1,0 +1,27 @@
+{
+  "name": "whatsapp-bot-customer-service",
+  "version": "1.0.0",
+  "description": "Bot WhatsApp untuk customer service menggunakan n8n dan WhatsApp gateway",
+  "main": "index.js",
+  "scripts": {
+    "start": "n8n start",
+    "dev": "n8n start --tunnel",
+    "install-n8n": "npm install n8n -g"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "customer-service",
+    "n8n",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "n8n": "^0.225.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 

@@ -1,0 +1,48 @@
+{
+  "greeting": {
+    "new_customer": "Halo {{name}}! Selamat datang di layanan Customer Service kami. Saya {{bot_name}}, asisten virtual yang siap membantu Anda. Ada yang bisa saya bantu?",
+    "returning_customer": "Halo {{name}}! Senang bertemu dengan Anda kembali. Ada yang bisa saya bantu hari ini?"
+  },
+  "faq": {
+    "produk": {
+      "info": "Kami menawarkan berbagai produk berkualitas. Silakan beri tahu produk apa yang ingin Anda ketahui lebih lanjut?",
+      "harga": "Harga produk kami bervariasi tergantung spesifikasi. Silakan sebutkan produk yang Anda minati untuk informasi harga.",
+      "ketersediaan": "Untuk mengecek ketersediaan produk, silakan sebutkan nama produk yang Anda cari."
+    },
+    "layanan": {
+      "info": "Kami menyediakan berbagai layanan untuk memenuhi kebutuhan Anda. Silakan beri tahu layanan apa yang ingin Anda ketahui?",
+      "jam_operasional": "Jam operasional layanan kami adalah {{business_hours_start}} sampai {{business_hours_end}} setiap hari.",
+      "cara_menggunakan": "Untuk panduan penggunaan layanan, silakan kunjungi website kami di bagian panduan pengguna."
+    },
+    "pembayaran": {
+      "metode": "Kami menerima pembayaran melalui transfer bank, kartu kredit, e-wallet, dan pembayaran di tempat (COD).",
+      "konfirmasi": "Untuk konfirmasi pembayaran, silakan kirimkan bukti transfer dengan menyebutkan nomor pesanan Anda.",
+      "masalah": "Jika Anda mengalami masalah dengan pembayaran, mohon berikan detail nomor pesanan dan masalah yang dihadapi."
+    },
+    "pengiriman": {
+      "status": "Untuk mengecek status pengiriman, silakan berikan nomor pesanan atau nomor resi Anda.",
+      "estimasi": "Estimasi waktu pengiriman biasanya 2-3 hari kerja untuk wilayah Jawa dan 4-7 hari kerja untuk luar Jawa.",
+      "biaya": "Biaya pengiriman dihitung berdasarkan berat, dimensi, dan lokasi tujuan pengiriman."
+    },
+    "pengembalian": {
+      "kebijakan": "Kebijakan pengembalian kami memungkinkan Anda mengembalikan produk dalam 7 hari setelah diterima jika terdapat kerusakan atau ketidaksesuaian.",
+      "cara": "Untuk melakukan pengembalian, silakan isi formulir pengembalian di website kami dan lampirkan foto produk.",
+      "status": "Untuk mengecek status pengembalian, silakan berikan nomor pesanan atau nomor tiket pengembalian Anda."
+    }
+  },
+  "escalation": {
+    "transfer": "Saya akan menghubungkan Anda dengan agen customer service kami. Mohon tunggu sebentar.",
+    "queue": "Saat ini semua agen kami sedang melayani pelanggan lain. Anda berada di urutan ke-{{queue_position}}. Estimasi waktu tunggu sekitar {{wait_time}} menit.",
+    "callback": "Saat ini tidak ada agen yang tersedia. Apakah Anda ingin kami menghubungi Anda kembali? Jika ya, silakan berikan nomor telepon dan waktu yang nyaman untuk dihubungi."
+  },
+  "closing": {
+    "satisfied": "Senang bisa membantu Anda hari ini! Apakah ada hal lain yang bisa saya bantu?",
+    "feedback": "Terima kasih telah menghubungi kami. Kami sangat menghargai feedback Anda untuk meningkatkan layanan kami. Silakan beri rating 1-5 untuk percakapan ini.",
+    "goodbye": "Terima kasih telah menghubungi layanan customer service kami. Semoga hari Anda menyenangkan!"
+  },
+  "error": {
+    "technical": "Mohon maaf, kami mengalami kendala teknis. Silakan coba lagi dalam beberapa saat.",
+    "invalid_input": "Mohon maaf, input yang Anda berikan tidak valid. Silakan coba lagi.",
+    "not_understood": "Mohon maaf, saya tidak memahami permintaan Anda. Bisakah Anda mengungkapkannya dengan cara lain?"
+  }
+} 

@@ -1,0 +1,25 @@
+{
+  "name": "fonnte-whatsapp-examples",
+  "version": "1.0.0",
+  "description": "Contoh implementasi WhatsApp bot dengan Fonnte API",
+  "main": "fonnte-webhook-handler.js",
+  "scripts": {
+    "start": "node fonnte-webhook-handler.js",
+    "test": "node fonnte-api-sender.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "fonnte",
+    "bot",
+    "api",
+    "webhook"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "form-data": "^4.0.0"
+  }
+} 

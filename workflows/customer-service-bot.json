@@ -1,0 +1,254 @@
+{
+  "name": "WhatsApp Customer Service Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp/webhook",
+        "options": {}
+      },
+      "name": "Webhook: Receive Message",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ekstrak data pesan dari WhatsApp Gateway\nlet incomingData;\n\n// Deteksi jenis gateway berdasarkan format data\nif ($input.body.Body && $input.body.From) {\n  // Format Twilio\n  incomingData = {\n    message: $input.body.Body,\n    sender: $input.body.From.replace('whatsapp:', ''),\n    timestamp: new Date().toISOString(),\n    gateway: 'twilio'\n  };\n} else if ($input.body.messages && $input.body.messages[0]) {\n  // Format WhatsApp Business API\n  const message = $input.body.messages[0];\n  incomingData = {\n    message: message.text.body,\n    sender: message.from,\n    timestamp: message.timestamp,\n    gateway: 'waba'\n  };\n} else if ($input.body.data && $input.body.data.message) {\n  // Format gateway lokal (contoh: Fonnte, WAblas)\n  incomingData = {\n    message: $input.body.data.message,\n    sender: $input.body.data.sender,\n    timestamp: new Date().toISOString(),\n    gateway: 'local'\n  };\n} else {\n  // Format tidak dikenal\n  incomingData = {\n    message: JSON.stringify($input.body),\n    sender: 'unknown',\n    timestamp: new Date().toISOString(),\n    gateway: 'unknown'\n  };\n}\n\n// Simpan data pesan ke variabel untuk digunakan di node berikutnya\nreturn {\n  json: incomingData\n};"
+      },
+      "name": "Extract Message Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "./config/bot-config.json"
+      },
+      "name": "Load Bot Config",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        450,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "./templates/responses.json"
+      },
+      "name": "Load Response Templates",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        450,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "./config/faq-database.json"
+      },
+      "name": "Load FAQ Database",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        650,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Proses data dari node sebelumnya\nconst message = $node[\"Extract Message Data\"].json.message.toLowerCase();\nconst sender = $node[\"Extract Message Data\"].json.sender;\n\n// Load konfigurasi dan data\nconst botConfig = JSON.parse($node[\"Load Bot Config\"].binary.data.toString());\nconst responseTemplates = JSON.parse($node[\"Load Response Templates\"].binary.data.toString());\nconst faqDatabase = JSON.parse($node[\"Load FAQ Database\"].binary.data.toString());\n\n// Fungsi untuk mencari FAQ yang cocok\nfunction findMatchingFAQ(message) {\n  // Cari di database FAQ\n  for (const faq of faqDatabase.faqs) {\n    // Cek apakah ada keyword yang cocok\n    for (const keyword of faq.keywords) {\n      if (message.includes(keyword.toLowerCase())) {\n        return faq;\n      }\n    }\n    \n    // Cek apakah ada pertanyaan yang cocok\n    for (const question of faq.questions) {\n      if (message.includes(question.toLowerCase())) {\n        return faq;\n      }\n    }\n  }\n  \n  return null;\n}\n\n// Fungsi untuk mengecek jam operasional\nfunction isWithinBusinessHours() {\n  const now = new Date();\n  const hours = now.getHours();\n  const businessStart = parseInt(botConfig.bot.businessHours.start.split(':')[0]);\n  const businessEnd = parseInt(botConfig.bot.businessHours.end.split(':')[0]);\n  \n  return hours >= businessStart && hours < businessEnd;\n}\n\n// Fungsi untuk mengecek kata kunci eskalasi\nfunction shouldEscalate(message) {\n  for (const keyword of botConfig.escalation.triggerKeywords) {\n    if (message.includes(keyword.toLowerCase())) {\n      return true;\n    }\n  }\n  return false;\n}\n\n// Tentukan respons berdasarkan pesan\nlet response;\nlet category = 'general';\n\n// Cek apakah perlu eskalasi\nif (shouldEscalate(message)) {\n  response = responseTemplates.escalation.transfer;\n  category = 'escalation';\n}\n// Cek apakah ini salam pembuka\nelse if (message.includes('halo') || message.includes('hai') || message.includes('hi') || message.includes('selamat')) {\n  response = responseTemplates.greeting.new_customer.replace('{{name}}', 'pelanggan').replace('{{bot_name}}', botConfig.bot.name);\n  category = 'greeting';\n}\n// Cek apakah ada di FAQ\nelse {\n  const matchingFAQ = findMatchingFAQ(message);\n  if (matchingFAQ) {\n    response = matchingFAQ.answer;\n    category = matchingFAQ.category;\n  } else {\n    response = responseTemplates.error.not_understood;\n    category = 'fallback';\n  }\n}\n\n// Cek jam operasional\nif (!isWithinBusinessHours() && category === 'escalation') {\n  response = botConfig.bot.businessHours.offHoursMessage;\n}\n\n// Kembalikan respons yang akan dikirim\nreturn {\n  json: {\n    sender: sender,\n    response: response,\n    category: category,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "name": "Process Message",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simpan percakapan ke database atau file log\nconst conversation = {\n  sender: $node[\"Process Message\"].json.sender,\n  message: $node[\"Extract Message Data\"].json.message,\n  response: $node[\"Process Message\"].json.response,\n  category: $node[\"Process Message\"].json.category,\n  timestamp: $node[\"Process Message\"].json.timestamp\n};\n\n// Di sini Anda bisa menambahkan kode untuk menyimpan ke database\n// Contoh: menyimpan ke file (dalam produksi sebaiknya gunakan database)\nconst fs = require('fs');\nconst path = require('path');\n\nconst logFile = path.join(__dirname, 'conversation_logs.json');\nlet logs = [];\n\n// Coba baca file log yang ada\ntry {\n  if (fs.existsSync(logFile)) {\n    const data = fs.readFileSync(logFile, 'utf8');\n    logs = JSON.parse(data);\n  }\n} catch (err) {\n  console.error('Error reading log file:', err);\n}\n\n// Tambahkan percakapan baru\nlogs.push(conversation);\n\n// Tulis kembali ke file\ntry {\n  fs.writeFileSync(logFile, JSON.stringify(logs, null, 2));\n} catch (err) {\n  console.error('Error writing log file:', err);\n}\n\n// Teruskan data untuk pengiriman respons\nreturn $node[\"Process Message\"].json;"
+      },
+      "name": "Save Conversation",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "url": "={{$node[\"Load Bot Config\"].json.whatsapp.apiEndpoint}}/messages",
+        "options": {},
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "to",
+              "value": "={{$node[\"Save Conversation\"].json.sender}}"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text",
+              "value": "={{$node[\"Save Conversation\"].json.response}}"
+            }
+          ]
+        }
+      },
+      "name": "Send WhatsApp Response",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Process Message\"].json.category}}",
+              "operation": "equal",
+              "value2": "escalation"
+            }
+          ]
+        }
+      },
+      "name": "Check for Escalation",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Kode untuk mengirim notifikasi ke agen manusia\nconst customerInfo = {\n  phone: $node[\"Extract Message Data\"].json.sender,\n  lastMessage: $node[\"Extract Message Data\"].json.message,\n  timestamp: $node[\"Extract Message Data\"].json.timestamp\n};\n\n// Di sini Anda bisa menambahkan kode untuk mengirim notifikasi ke sistem CRM atau aplikasi agen\n// Contoh: mengirim email notifikasi\n\nreturn {\n  json: {\n    success: true,\n    message: \"Notifikasi berhasil dikirim ke agen\",\n    customerInfo\n  }\n};"
+      },
+      "name": "Notify Human Agent",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1250,
+        500
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook: Receive Message": {
+      "main": [
+        [
+          {
+            "node": "Extract Message Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Message Data": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Bot Config": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Response Templates": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load FAQ Database": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Message": {
+      "main": [
+        [
+          {
+            "node": "Save Conversation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check for Escalation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Conversation": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Escalation": {
+      "main": [
+        [
+          {
+            "node": "Notify Human Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "whatsapp-customer-service-bot"
+} 
